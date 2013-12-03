@@ -1,0 +1,1 @@
+#define HOOGTE 10 // #define is een text substitutie!
