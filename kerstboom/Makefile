@@ -3,7 +3,7 @@ CFLAGS = -Wall
 
 all: kerstboom
 
-kerstboom: kerstboom.cpp kerstboom.h
+kerstboom: kerstboom.o kerstboom.h
 	$(CC) -o $@ kerstboom.o
 
 clean:

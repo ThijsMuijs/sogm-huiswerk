@@ -1,1 +1,1 @@
-#define HOOGTE 10 // #define is een text substitutie!
+#define HOOGTE 20 // #define is een text substitutie!

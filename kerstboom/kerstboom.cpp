@@ -15,9 +15,12 @@ int aantalkerstbomen = 0;
 for(int boom = 0; boom < aantalkerstbomen; ++boom){
   for(int regel = 0; regel < HOOGTE; ++regel){
 
+  for(int spatie = 0; spatie< HOOGTE-1-regel ;++spatie){
+   cout << " "; }
+
    for(int ster = 0; ster<((regel*2)+1);++ster){
-   cout << "*";
-		}
+   cout << "*"; }
+
 	cout << endl;
 	}
 }
