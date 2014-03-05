@@ -1,17 +1,17 @@
 CC = g++
-CFLAGS = -Wall
+CFLAGS = -Wall -I/usr/local/include
+LDFLAGS = -L/usr/local/lib -lportaudio
 
-OBJ= guitarfx.o amplifier.o tremolo.o
+OBJ= guitarfx.o audio_io.o amplifier.o tremolo.o
 
 all: guitarfx
 
 guitarfx: $(OBJ)
-	$(CC) -o $@ $(CFLAGS) $(OBJ)
+	$(CC) -o $@ $(CFLAGS) $(OBJ) $(LDFLAGS)
 
 .cpp.o:
-	$(CC) -c $< $(CFLAGS)
+	$(CC) $(CFLAGS) -c $<
 
 clean:
 	rm -f *.o
 	rm -f `find . -perm +111 -type f`
-

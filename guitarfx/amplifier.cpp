@@ -1,47 +1,50 @@
-/**********************************************************************
-* Copyright (c) 2013, Hogeschool voor de Kunsten Utrecht
-* Hilversum, the Netherlands
-* All rights reserved
-***********************************************************************
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program.
-* If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************
-*
-* File name : guitarfx.cpp
-* System name : guitarfx
-*
-* Description : main file for guitarfx
-*
-* Author : Marc_G
-* E-mail : marcg@dinkum.nl
-*
-**********************************************************************/
+ // AMPLIFIER.CPP
 
-#include <iostream>
 #include "amplifier.h"
+#include <math.h>
+#include <iostream>
+#include <cstdlib>
 
 using namespace std;
 
-
-
 Amplifier::Amplifier()
 {
-  level=5; // default
+  level = 1;
+  buffersize = 256;
+  buffer = new float[buffersize];
 }
 
-
-void Amplifier::show_level()
+void Amplifier::show_params()
 {
   cout << "Amplifier level: " << level << endl;
+}
+
+void Amplifier::set_level(float l)
+{
+  level = l;
+}
+
+void Amplifier::read_samples()
+{
+  srandom(time(NULL));
+  for (int i = 0; i < buffersize; i++)
+  {
+    buffer[i] = cos(((float)random()/RAND_MAX)*2.0*M_PI);
+  }
+}
+
+void Amplifier::process_samples()
+{
+  for (int i = 0; i < buffersize; i++)
+  {
+    buffer[i] *= level;
+  }
+}
+
+void Amplifier::write_samples()
+{
+  for (int i = 0; i < buffersize; i++)
+  {
+    cout << buffer[i] << endl;
+  }
 }

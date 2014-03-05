@@ -1,15 +1,21 @@
-#ifndef _AMPLIFIER_H_
-#define _AMPLIFIER_H_
+// AMPLIFIER.H
 
-#define BUFFERSIZE 10
+#ifndef __AMPLIFIER_H
+#define __AMPLIFIER_H
 
 class Amplifier
 {
 public:
   Amplifier(); // constructor
-  void show_level();
+  void show_params();
+  void set_level(float l);
+  void read_samples();
+  void process_samples();
+  void write_samples();
 protected:
-  long level;
+  float  level;
+  float* buffer;
+  int    buffersize;
 };
 
 #endif
