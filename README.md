@@ -1,5 +1,0 @@
-sogm opdrachten
-
-===============
-
-SOGM huiswerk
