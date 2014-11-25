@@ -1,0 +1,108 @@
+#! /bin/bash
+echo
+echo ".wav/.aif/.aiff -> .mp3/.flac compression script"
+echo "----------------Thijs Muijs----------------"
+echo
+echo "This script will convert all .wav, .aif or .aiff"
+echo "files in a given directory to .mp3 or .flac and then"
+echo "save the converted files in a new folder called 'converted'"
+echo
+echo "-In case of an .aif file the converter will"
+echo "first change its extension to .aiff"
+echo
+
+	#geef locatie
+echo "Give directory"
+echo "example: `pwd`"
+while read DIR; do
+if [ ! -d $DIR ]
+then
+echo "Given directory doesn't exist"
+echo "Try this: `pwd`"
+else break
+fi
+done
+echo
+echo "chosen directory: $DIR"
+
+	#geef type input bestand
+echo "Give file type to convert from: 'wav', 'aif' or 'aiff' "
+while read TYPEIN; do
+  case $TYPEIN in
+    wav)
+	break
+    ;;
+
+    aif)
+	break
+    ;;
+
+    aiff)
+	break
+    ;;
+    *)
+      echo "$* is not a valid type"
+      echo "Use: 'wav', 'aif' or 'aiff'"
+  esac
+done
+echo
+
+	#geef type output bestand
+echo "Give file type to convert to: 'mp3' or 'flac'"
+while read TYPEOUT; do
+  case $TYPEOUT in
+    mp3)
+	break
+    ;;
+
+    flac)
+	break
+    ;;
+
+    *)
+      echo "$* is not a valid type"
+      echo "Use: 'mp3' or 'flac' "
+  esac
+done
+echo
+
+	#zijn er files met gekozen extensie in de gekozen map?
+FILECOUNT=`ls -1 ${DIR}/*.${TYPEIN} 2> /dev/null | wc -l`
+if [ $FILECOUNT -lt 1 ]
+then
+echo "There are no ${TYPEIN} files in $DIR"
+  #say Program terminated
+echo "Program terminated"
+echo
+exit
+
+	#map controleren
+fi
+if [ ! -d ${DIR}/Converted ]
+then
+mkdir ${DIR}/Converted
+echo "creating new folder ${DIR}/Converted"
+fi
+DESTDIR=${DIR}/Converted
+echo "Converting..."
+
+	#aif veranderen naar aiff
+if [ $TYPEIN = "aif" ]
+then
+for FILE in ${DIR}/*.${TYPEIN};
+do
+mv $FILE "`basename $FILE .aif`.aiff"
+TYPEIN=aiff
+done
+fi
+
+	#converteren!
+for FILE in ${DIR}/*.${TYPEIN};
+do
+echo "Converting: `basename $FILE`"
+lame -S $FILE ${DESTDIR}/`basename $FILE ${TYPEIN}`${TYPEOUT} 2> /dev/null # 2> /dev/null laat die lame berichten niet zien
+done
+echo
+echo "Conversion completed!"
+echo
+
