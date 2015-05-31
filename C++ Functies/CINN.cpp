@@ -8,9 +8,6 @@ int optellen(int a, int b){
 
 int main(){
 int a, b = 0;
-    
-
-
 cout << "geef getal voor parameter a" << endl;
 cin >> a;
 cout << "a = " << a << endl;

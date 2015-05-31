@@ -20,8 +20,7 @@ cin >> size;
 int array[size];
 for(int i = 0; i < size; i++){
 array[i] = rand() % 1000;
-    //output array
-    cout << array[i] << endl;
+cout << array[i] << endl;
 }
 
 cout << "hoogste getal in de array is: " << maxArray(array, size) << endl;
