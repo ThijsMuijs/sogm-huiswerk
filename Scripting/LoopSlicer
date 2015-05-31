@@ -1,0 +1,48 @@
+#! /bin/bash
+
+if [ $# != 2 ]; then
+echo
+echo "This script creates new audio files"
+echo "divided in equal parts of a given amount."
+echo "It adds the remainder of samples to the last file."
+echo
+echo "The script requires a directory and the number of slices you want to make"
+echo "Like this:"
+echo "$0 \"`pwd`/audio.wav\" 20"
+echo
+exit
+fi
+
+if [ $2 -lt 2 ]; then
+echo
+echo "Can't make slices smaller than 2."
+echo
+exit
+fi
+
+DIR=$1
+SLICES=$2
+
+FILEDIR=`dirname "${DIR}"`
+BASENAME=`basename "${DIR}"`
+EXTENSION=".${BASENAME##*.}"
+FILENAME="${BASENAME%.*}"
+
+NOS=`soxi -s "${DIR}"`
+SS=$(($NOS/$SLICES))
+REMAINDERSS=$(($NOS%$SLICES))
+
+echo
+echo "Creating $SLICES sliced files.."
+
+for ((i=0; i<$SLICES;i++))
+do
+FILEOUT="${FILEDIR}"/"${FILENAME}"_$((i+1))"$EXTENSION"
+echo "${FILEOUT}"
+if [ $i = $((SLICES-1)) ];
+then
+sox "${DIR}" "${FILEOUT}" trim $(($SS*$i))s $(($SS+REMAINDERSS))s
+else
+sox "${DIR}" "${FILEOUT}" trim $(($SS*$i))s "$SS"s
+fi
+done

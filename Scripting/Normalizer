@@ -1,0 +1,31 @@
+#! /bin/bash
+
+if [ $# != 1 ]; then
+echo
+echo "This script creates a new normalized audio file (normalized to -0.01 dBFS)"
+echo
+echo "The script only requires the direction to a file"
+echo "Like this:"
+echo "$0 \"`pwd`/audio.wav\""
+echo
+exit
+fi
+
+
+DIR=$1
+
+FILEDIR=`dirname "${DIR}"`
+BASENAME=`basename "${DIR}"`
+EXTENSION=".${BASENAME##*.}"
+FILENAME="${BASENAME%.*}"
+
+NOS=`soxi -s "${DIR}"`
+
+FILEOUT="${FILEDIR}"/"${FILENAME}"_"Normalized""$EXTENSION"
+
+#Sound file information
+soxi "${DIR}"
+
+#Normalizing
+sox "${DIR}" "${FILEOUT}" norm -0.01
+echo "Created: ${FILEOUT}"
